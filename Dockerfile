@@ -45,5 +45,5 @@ RUN /usr/local/bin/znc --datadir=$znc_config_root --makepem
 # set up the service to run when the container starts
 USER $znc_exec_user
 EXPOSE $znc_port
-#CMD ["/usr/local/bin/znc", "--datadir=$znc_config_root", "--foreground", "--debug"]
-CMD ["/usr/local/bin/znc", "--datadir=$znc_config_root", "--foreground"]
+#CMD /usr/local/bin/znc --datadir=$znc_config_root --foreground --debug
+CMD /usr/local/bin/znc --datadir=$znc_config_root --foreground
