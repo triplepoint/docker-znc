@@ -36,14 +36,15 @@ RUN ./configure \
 RUN groupadd -r --gid 1066 $znc_exec_user \
     && useradd --no-log-init -r --uid 1066 -g $znc_exec_user $znc_exec_user
 
+# Set up the ZNC self signed certificate
+run mkdir -p $znc_config_root && chown $znc_exec_user:$znc_exec_user $znc_config_root
+USER $znc_exec_user
+RUN /usr/local/bin/znc --datadir=$znc_config_root --makepem
+
 # Set up the ZNC configuration directory
 VOLUME $znc_config_root
 
-# Set up the ZNC self signed certificate
-RUN /usr/local/bin/znc --datadir=$znc_config_root --makepem
-
 # set up the service to run when the container starts
-USER $znc_exec_user
 EXPOSE $znc_port
 #CMD /usr/local/bin/znc --datadir=$znc_config_root --foreground --debug
 CMD /usr/local/bin/znc --datadir=$znc_config_root --foreground
