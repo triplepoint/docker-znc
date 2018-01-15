@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 LABEL maintainer="Jonathan Hanson (jonathan@jonathan-hanson.org)"
 
 ENV znc_version=1.6.5
-ENV znc_exec_user=znc-admin
+# ENV znc_exec_user=znc-admin
 ENV znc_config_root=/etc/znc
 ARG znc_port=6666
 
@@ -33,8 +33,8 @@ RUN ./configure \
     && make install
 
 # Set up the ZNC user and group
-RUN groupadd -r $znc_exec_user \
-    && useradd --no-log-init -r -g $znc_exec_user $znc_exec_user
+# RUN groupadd -r $znc_exec_user \
+#     && useradd --no-log-init -r -g $znc_exec_user $znc_exec_user
 
 # Set up the ZNC configuration directory
 VOLUME $znc_config_root
@@ -43,7 +43,7 @@ VOLUME $znc_config_root
 RUN /usr/local/bin/znc --datadir=$znc_config_root --makepem
 
 # set up the service to run when the container starts
-USER $znc_exec_user
+# USER $znc_exec_user
 EXPOSE $znc_port
 #CMD /usr/local/bin/znc --datadir=$znc_config_root --foreground --debug
 CMD /usr/local/bin/znc --datadir=$znc_config_root --foreground
