@@ -33,8 +33,8 @@ RUN ./configure \
     && make install
 
 # Set up the ZNC user and group
-RUN groupadd -r $znc_exec_user \
-    && useradd --no-log-init -r -g $znc_exec_user $znc_exec_user
+RUN groupadd -r --gid 1066 $znc_exec_user \
+    && useradd --no-log-init -r --uid 1066 -g $znc_exec_user $znc_exec_user
 
 # Set up the ZNC configuration directory
 VOLUME $znc_config_root
