@@ -8,7 +8,7 @@ You'll then need to place a `/etc/znc/configs/znc.conf` file.  See the [document
 
 The ZNC service really doesn't like running as root, so a user and group, both with ID's `1066` are used to run the service.  Make sure the mounted volume and config files are accessible by this user.
 
-Note that the container exposes port `6666` by default, but this is configurable at image built time:
+Note that the container exposes port `6666` by default, but this is configurable at image build time:
 ```
 docker build --build-arg znc_port=7777 .
 ```
