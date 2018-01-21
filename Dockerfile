@@ -2,6 +2,7 @@ FROM ubuntu:16.04
 LABEL maintainer="Jonathan Hanson (jonathan@jonathan-hanson.org)"
 
 ENV znc_version=1.6.5
+ARG znc_clientbuffer_gitref=znc-1.6.0
 ENV znc_exec_user=znc-admin
 ARG znc_user_group_id=1066
 ENV znc_config_root=/etc/znc
@@ -21,7 +22,7 @@ RUN apt-get update && apt-get install -y \
 # This includes the ClientBuffer module source file
 ADD http://znc.in/releases/archive/znc-$znc_version.tar.gz /tmp/
 RUN tar -xvf /tmp/znc-$znc_version.tar.gz -C /usr/local/src
-ADD https://raw.githubusercontent.com/jpnurmi/znc-clientbuffer/znc-1.6.0/clientbuffer.cpp /usr/local/src/znc-$znc_version/modules/
+ADD https://raw.githubusercontent.com/CyberShadow/znc-clientbuffer/$znc_clientbuffer_gitref/clientbuffer.cpp /usr/local/src/znc-$znc_version/modules/
 RUN rm -rf /tmp/znc-$znc_version.tar.gz
 
 # Make and install ZNC
