@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 LABEL maintainer="Jonathan Hanson (jonathan@jonathan-hanson.org)"
 
 ENV znc_version=1.6.5
-ARG znc_clientbuffer_gitref=znc-1.6.0
+ARG znc_clientbuffer_gitref=d55a1083c440e39f8044c6ede400793ecd66468c
 ENV znc_exec_user=znc-admin
 ARG znc_user_group_id=1066
 ENV znc_config_root=/etc/znc
