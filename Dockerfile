@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 LABEL maintainer="Jonathan Hanson (jonathan@jonathan-hanson.org)"
 
-ENV znc_version=1.6.6-rc1
+ENV znc_version=1.6.5
 ARG znc_clientbuffer_gitref=7ae14f82f74eee552d0bfdd9e6c6e96a2b31608d
 ENV znc_exec_user=znc-admin
 ARG znc_user_group_id=1066
@@ -20,8 +20,7 @@ RUN apt-get update && apt-get install -y \
 
 # Fetch build sources, and unpack the source into the source directory
 # This includes the ClientBuffer module source file
-# ADD http://znc.in/releases/archive/znc-$znc_version.tar.gz /tmp/
-ADD https://github.com/znc/znc/archive/znc-$znc_version.tar.gz /tmp/
+ADD http://znc.in/releases/archive/znc-$znc_version.tar.gz /tmp/
 RUN tar -xvf /tmp/znc-$znc_version.tar.gz -C /usr/local/src
 ADD https://raw.githubusercontent.com/CyberShadow/znc-clientbuffer/$znc_clientbuffer_gitref/clientbuffer.cpp /usr/local/src/znc-$znc_version/modules/
 RUN rm -rf /tmp/znc-$znc_version.tar.gz
@@ -46,6 +45,8 @@ VOLUME $znc_config_root
 USER $znc_exec_user
 EXPOSE $znc_port
 
+# When the container starts, generate a `znc.pem` file in the config directory,
+# if it doesn't already exist.  Then run whatever CMD passes.
 COPY ./docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
